@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en" data-color-scheme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberLab CTF Tools</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-text">CyberLab</span>
+                    <span class="logo-subtitle">CTF Tools</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Layout -->
+        <div class="main-layout">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <h3>Tool Categories</h3>
+                    <div class="category-list">
+                        <div class="category-item active" data-category="cryptography">
+                            <div class="category-icon">🔐</div>
+                            <div class="category-name">Cryptography</div>
+                        </div>
+                        <div class="category-item" data-category="web">
+                            <div class="category-icon">🕸️</div>
+                            <div class="category-name">Web Exploitation</div>
+                        </div>
+                        <div class="category-item" data-category="steganography">
+                            <div class="category-icon">🖼️</div>
+                            <div class="category-name">Steganography</div>
+                        </div>
+                        <div class="category-item" data-category="forensics">
+                            <div class="category-icon">🔍</div>
+                            <div class="category-name">Forensics</div>
+                        </div>
+                        <div class="category-item" data-category="binary">
+                            <div class="category-icon">⚙️</div>
+                            <div class="category-name">Binary Analysis</div>
+                        </div>
+                        <div class="category-item" data-category="reverse">
+                            <div class="category-icon">🔧</div>
+                            <div class="category-name">Reverse Engineering</div>
+                        </div>
+                        <div class="category-item" data-category="osint">
+                            <div class="category-icon">🌐</div>
+                            <div class="category-name">OSINT</div>
+                        </div>
+                        <div class="category-item" data-category="utilities">
+                            <div class="category-icon">🛠️</div>
+                            <div class="category-name">Utilities</div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- Cryptography Tools -->
+                <section class="tool-section active" id="cryptography">
+                    <h1>🔐 Cryptography Tools</h1>
+                    
+                    <div class="tool-grid">
+                        <div class="tool-card">
+                            <h3>Base64 Encoder/Decoder</h3>
+                            <div class="tool-interface">
+                                <div class="form-group">
+                                    <label class="form-label">Input</label>
+                                    <textarea class="form-control" rows="3" placeholder="Enter text to encode/decode" id="base64Input"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Operation</label>
+                                    <select class="form-control" id="base64Operation">
+                                        <option value="encode">Encode</option>
+                                        <option value="decode">Decode</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Output</label>
+                                    <textarea class="form-control" rows="3" readonly id="base64Output"></textarea>
+                                </div>
+                                <button class="btn btn--primary" onclick="tools.processBase64()">Process</button>
+                            </div>
+                        </div>
+
+                        <div class="tool-card">
+                            <h3>Caesar Cipher</h3>
+                            <div class="tool-interface">
+                                <div class="form-group">
+                                    <label class="form-label">Text</label>
+                                    <textarea class="form-control" rows="3" placeholder="Enter text" id="caesarInput"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Shift (leave empty for brute force)</label>
+                                    <input type="number" class="form-control" placeholder="1-25" id="caesarShift">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Operation</label>
+                                    <select class="form-control" id="caesarOperation">
+                                        <option value="encrypt">Encrypt</option>
+                                        <option value="decrypt">Decrypt</option>
+                                        <option value="analyze">Analyze (all shifts)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Output</label>
+                                    <textarea class="form-control" rows="8" readonly id="caesarOutput"></textarea>
+                                </div>
+                                <button class="btn btn--primary" onclick="tools.processCaesar()">Process</button>
+                            </div>
+                        </div>
+
+                        <div class="tool-card">
+                            <h3>Hash Generator</h3>
+                            <div class="tool-interface">
+                                <div class="form-group">
+                                    <label class="form-label">Input Text</label>
+                                    <input type="text" class="form-control" placeholder="Enter text to hash" id="hashInput">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Hash Type</label>
+                                    <select class="form-control" id="hashType">
+                                        <option value="SHA-1">SHA-1</option>
+                                        <option value="SHA-256">SHA-256</option>
+                                        <option value="SHA-512">SHA-512</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Generated Hash</label>
+                                    <input type="text" class="form-control" readonly id="hashOutput">
+                                </div>
+                                <button class="btn btn--primary" onclick="tools.generateHash()">Generate Hash</button>
+                            </div>
+                        </div>
+
+                        <div class="tool-card">
+                            <h3>XOR Cipher</h3>
+                            <div class="tool-interface">
+                                <div class="form-group">
+                                    <label class="form-label">Input</label>
+                                    <textarea class="form-control" rows="3" placeholder="Enter text or hex" id="xorInput"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Key</label>
+                                    <input type="text" class="form-control" placeholder="Enter XOR key" id="xorKey">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Input Format</label>
+                                    <select class="form-control" id="xorInputFormat">
+                                        <option value="text">Text</option>
+                                        <option value="hex">Hex</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Output</label>
+                                    <textarea class="form-control" rows="3" readonly id="xorOutput"></textarea>
+                                </div>
+                                <button class="btn btn--primary" onclick="tools.processXOR()">Process XOR</button>
+                            </div>
+                        </div>
+
+                        <div class="tool-card">
+                            <h3>Binary/Hex/ASCII Converter</h3>
+                            <div class="tool-interface">
+                                <div class="form-group">
+                                    <label class="form-label">Input</label>
+                                    <textarea class="form-control" rows="3" placeholder="Enter data" id="converterInput"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">From</label>
+                                    <select class="form-control" id="converterFrom">
+                                        <option value="ascii">ASCII</option>
+                                        <option value="hex">Hex</option>
+                                        <option value="binary">Binary</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">To</label>
+                                    <select class="form-control" id="converterTo">
+                                        <option value="ascii">ASCII</option>
+                                        <option value="hex">Hex</option>
+                                        <option value="binary">Binary</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Output</label>
+                                    <textarea class="form-control" rows="3" readonly id="converterOutput"></textarea>
+                                </div>
+                                <button class="btn btn--primary" onclick="tools.convertData()">Convert</button>
+                            </div>
+                        </div>
+
+                        <div class="tool-card">
+                            <h3>Morse Code Translator</h3>
+                            <div class="tool-interface">
+                                <div class="form-group">
+                                    <label class="form-label">Input</label>
+                                    <textarea class="form-control" rows="3" placeholder="Enter text or morse code" id="morseInput"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Output</label>
+                                    <textarea class="form-control" rows="3" readonly id="morseOutput"></textarea>
+                                </div>
+                                <button class="btn btn--primary" onclick="tools.translateMorse()">Translate</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Web Exploitation Tools -->
+                <section class="tool-section" id="web">
+                    <h1>🕸️ Web Exploitation Tools</h1>
+                    
+                    <div class="tool-grid">
+                        <div class="tool-card">
+                            <h3>JWT Decoder</h3>
+                            <div class="tool-interface">
+                                <div class="form-group">
+                                    <label class="form-label">JWT Token</label>
+                                    <textarea class="form-control" rows="3" placeholder="Enter JWT token" id="jwtToken"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Header</label>
+                                    <textarea class="form-control" rows="3" readonly id="jwtHeader"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Payload</label>
+                                    <textarea class="form-control" rows="5" readonly id="jwtPayload"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Signature</label>
+                                    <input type="text" class="form-control" readonly id="jwtSignature">
+                                </div>
+                                <button class="btn btn--primary" onclick="tools.decodeJWT()">Decode JWT</button>
+                            </div>
+                        </div>
+
+                        <div class="tool-card">
+                            <h3>URL Encoder/Decoder</h3>
+                            <div class="tool-interface">
+                                <div class="form-group">
+                                    <label class="form-label">Input</label>
+                                    <textarea class="form-control" rows="3" placeholder="Enter URL or text" id="urlInput"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Operation</label>
+                                    <select class="form-control" id="urlOperation">
+                                        <option value="encode">Encode</option>
+                                        <option value="decode">Decode</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Output</label>
+                                    <textarea class="form-control" rows="3" readonly id="urlOutput"></textarea>
+                                </div>
+                                <button class="btn btn--primary" onclick="tools.processURL()">Process</button>
+                            </div>
+                        </div>
+
+                        <div class="tool-card">
+                            <h3>SQL Injection Payloads</h3>
+                            <div class="tool-interface">
+                                <div class="form-group">
+                                    <label class="form-label">Database Type</label>
+                                    <select class="form-control" id="sqlDatabase">
+                                        <option value="mysql">MySQL</option>
+                                        <option value="postgresql">PostgreSQL</option>
+                                        <option value="mssql">MSSQL</option>
+                                        <option value="oracle">Oracle</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Attack Type</label>
+                                    <select class="form-control" id="sqlAttackType">
+                                        <option value="union">Union-based</option>
+                                        <option value="boolean">Boolean-based</option>
+                                        <option value="time">Time-based</option>
+                                        <option value="error">Error-based</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Generated Payloads</label>
+                                    <textarea class="form-control" rows="10" readonly id="sqlPayloads"></textarea>
+                                </div>
+                                <button class="btn btn--primary" onclick="tools.generateSQLPayloads()">Generate Payloads</button>
+                            </div>
+                        </div>
+
+                        <div class="tool-card">
+                            <h3>XSS Payload Generator</h3>
+                            <div class="tool-interface">
+                                <div class="form-group">
+                                    <label class="form-label">Context</label>
+                                    <select class="form-control" id="xssContext">
+                                        <option value="html">HTML</option>
+                                        <option value="attribute">Attribute</option>
+                                        <option value="javascript">JavaScript</option>
+                                        <option value="css">CSS</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Payload Type</label>
+                                    <select class="form-control" id="xssPayloadType">
+                                        <option value="alert">Alert Box</option>
+                                        <option value="cookie">Cookie Stealer</option>
+                                        <option value="redirect">Redirect</option>
+                                        <option value="keylogger">Keylogger</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Generated Payloads</label>
+                                    <textarea class="form-control" rows="10" readonly id="xssPayloads"></textarea>
+                                </div>
+                                <button class="btn btn--primary" onclick="tools.generateXSSPayloads()">Generate Payloads</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Steganography Tools -->
+                <section class="tool-section" id="steganography">
+                    <h1>🖼️ Steganography Tools</h1>
+                    
+                    <div class="tool-grid">
+                        <div class="tool-card">
+                            <h3>Text Steganography</h3>
+                            <div class="tool-interface">
+                                <div class="form-group">
+                                    <label class="form-label">Cover Text</label>
+                                    <textarea class="form-control" rows="4" placeholder="Enter cover text" id="stegoText"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Hidden Message</label>
+                                    <input type="text" class="form-control" placeholder="Enter message to hide" id="stegoMessage">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Method</label>
+                                    <select class="form-control" id="stegoMethod">
+                                        <option value="zerowidth">Zero-width characters</option>
+                                        <option value="spaces">Space variations</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Result</label>
+                                    <textarea class="form-control" rows="4" readonly id="stegoResult"></textarea>
+                                </div>
+                                <button class="btn btn--primary" onclick="tools.hideTextMessage()">Hide Message</button>
+                                <button class="btn btn--secondary" onclick="tools.extractTextMessage()">Extract Message</button>
+                            </div>
+                        </div>
+
+                        <div class="tool-card">
+                            <h3>File Signature Analyzer</h3>
+                            <div class="tool-interface">
+                                <div class="form-group">
+                                    <label class="form-label">File or Hex Signature</label>
+                                    <input type="file" class="form-control" id="sigFile">
+                                    <textarea class="form-control" rows="3" placeholder="Or paste hex signature" id="sigHex"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Analysis Result</label>
+                                    <textarea class="form-control" rows="8" readonly id="sigResult"></textarea>
+                                </div>
+                                <button class="btn btn--primary" onclick="tools.analyzeSignature()">Analyze Signature</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Forensics Tools -->
+                <section class="tool-section" id="forensics">
+                    <h1>🔍 Forensics Tools</h1>
+                    
+                    <div class="tool-grid">
+                        <div class="tool-card">
+                            <h3>Hex Editor</h3>
+                            <div class="tool-interface">
+                                <div class="form-group">
+                                    <label class="form-label">File</label>
+                                    <input type="file" class="form-control" id="hexFile">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Hex Data</label>
+                                    <textarea class="form-control" rows="12" placeholder="Hex data will appear here" id="hexData"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Search</label>
+                                    <input type="text" class="form-control" placeholder="Enter hex or ASCII to search" id="hexSearch">
+                                </div>
+                                <button class="btn btn--primary" onclick="tools.loadHexFile()">Load File</button>
+                                <button class="btn btn--secondary" onclick="tools.searchHex()">Search</button>
+                            </div>
+                        </div>
+
+                        <div class="tool-card">
+                            <h3>String Extractor</h3>
+                            <div class="tool-interface">
+                                <div class="form-group">
+                                    <label class="form-label">File or Text</label>
+                                    <input type="file" class="form-control" id="stringsFile">
+                                    <textarea class="form-control" rows="4" placeholder="Or paste binary/hex data" id="stringsText"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Minimum Length</label>
+                                    <input type="number" class="form-control" value="4" id="stringsMinLen">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Extracted Strings</label>
+                                    <textarea class="form-control" rows="10" readonly id="stringsOutput"></textarea>
+                                </div>
+                                <button class="btn btn--primary" onclick="tools.extractStrings()">Extract Strings</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Binary Analysis Tools -->
+                <section class="tool-section" id="binary">
+                    <h1>⚙️ Binary Analysis Tools</h1>
+                    
+                    <div class="tool-grid">
+                        <div class="tool-card">
+                            <h3>Entropy Calculator</h3>
+                            <div class="tool-interface">
+                                <div class="form-group">
+                                    <label class="form-label">File or Data</label>
+                                    <input type="file" class="form-control" id="entropyFile">
+                                    <textarea class="form-control" rows="4" placeholder="Or paste text/hex data" id="entropyText"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Entropy Analysis</label>
+                                    <textarea class="form-control" rows="8" readonly id="entropyResult"></textarea>
+                                </div>
+                                <button class="btn btn--primary" onclick="tools.calculateEntropy()">Calculate Entropy</button>
+                            </div>
+                        </div>
+
+                        <div class="tool-card">
+                            <h3>Binary Viewer</h3>
+                            <div class="tool-interface">
+                                <div class="form-group">
+                                    <label class="form-label">File</label>
+                                    <input type="file" class="form-control" id="binaryFile">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">View Mode</label>
+                                    <select class="form-control" id="binaryViewMode">
+                                        <option value="hex">Hex</option>
+                                        <option value="ascii">ASCII</option>
+                                        <option value="binary">Binary</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Binary Data</label>
+                                    <textarea class="form-control" rows="12" readonly id="binaryOutput"></textarea>
+                                </div>
+                                <button class="btn btn--primary" onclick="tools.viewBinary()">View Binary</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Reverse Engineering Tools -->
+                <section class="tool-section" id="reverse">
+                    <h1>🔧 Reverse Engineering Tools</h1>
+                    
+                    <div class="tool-grid">
+                        <div class="tool-card">
+                            <h3>Hex to Assembly</h3>
+                            <div class="tool-interface">
+                                <div class="form-group">
+                                    <label class="form-label">Hex Opcodes</label>
+                                    <textarea class="form-control" rows="4" placeholder="Enter hex opcodes (e.g., 48c7c03c000000)" id="hexOpcodes"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Architecture</label>
+                                    <select class="form-control" id="asmArch">
+                                        <option value="x86">x86</option>
+                                        <option value="x64">x64</option>
+                                        <option value="arm">ARM</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Assembly</label>
+                                    <textarea class="form-control" rows="8" readonly id="asmOutput"></textarea>
+                                </div>
+                                <button class="btn btn--primary" onclick="tools.hexToAssembly()">Convert to Assembly</button>
+                            </div>
+                        </div>
+
+                        <div class="tool-card">
+                            <h3>String Decoder</h3>
+                            <div class="tool-interface">
+                                <div class="form-group">
+                                    <label class="form-label">Encoded String</label>
+                                    <textarea class="form-control" rows="4" placeholder="Enter encoded/obfuscated string" id="encodedString"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Encoding Type</label>
+                                    <select class="form-control" id="encodingType">
+                                        <option value="auto">Auto-detect</option>
+                                        <option value="base64">Base64</option>
+                                        <option value="hex">Hex</option>
+                                        <option value="url">URL</option>
+                                        <option value="unicode">Unicode</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Decoded String</label>
+                                    <textarea class="form-control" rows="4" readonly id="decodedString"></textarea>
+                                </div>
+                                <button class="btn btn--primary" onclick="tools.decodeString()">Decode String</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- OSINT Tools -->
+                <section class="tool-section" id="osint">
+                    <h1>🌐 OSINT Tools</h1>
+                    
+                    <div class="tool-grid">
+                        <div class="tool-card">
+                            <h3>Email Generator</h3>
+                            <div class="tool-interface">
+                                <div class="form-group">
+                                    <label class="form-label">Base Name</label>
+                                    <input type="text" class="form-control" placeholder="Enter name (e.g., john.doe)" id="emailBase">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Domain</label>
+                                    <input type="text" class="form-control" placeholder="Enter domain (e.g., company.com)" id="emailDomain">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Generated Emails</label>
+                                    <textarea class="form-control" rows="10" readonly id="emailOutput"></textarea>
+                                </div>
+                                <button class="btn btn--primary" onclick="tools.generateEmails()">Generate Variations</button>
+                            </div>
+                        </div>
+
+                        <div class="tool-card">
+                            <h3>Username Checker</h3>
+                            <div class="tool-interface">
+                                <div class="form-group">
+                                    <label class="form-label">Username</label>
+                                    <input type="text" class="form-control" placeholder="Enter username to check" id="usernameInput">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Platforms</label>
+                                    <div class="checkbox-group">
+                                        <label><input type="checkbox" checked id="checkTwitter"> Twitter</label>
+                                        <label><input type="checkbox" checked id="checkInstagram"> Instagram</label>
+                                        <label><input type="checkbox" checked id="checkGitHub"> GitHub</label>
+                                        <label><input type="checkbox" checked id="checkReddit"> Reddit</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Results</label>
+                                    <textarea class="form-control" rows="8" readonly id="usernameResults"></textarea>
+                                </div>
+                                <button class="btn btn--primary" onclick="tools.checkUsername()">Check Username</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Utilities -->
+                <section class="tool-section" id="utilities">
+                    <h1>🛠️ Utility Tools</h1>
+                    
+                    <div class="tool-grid">
+                        <div class="tool-card">
+                            <h3>Password Generator</h3>
+                            <div class="tool-interface">
+                                <div class="form-group">
+                                    <label class="form-label">Length</label>
+                                    <input type="number" class="form-control" value="12" min="4" max="128" id="passwordLength">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Character Sets</label>
+                                    <div class="checkbox-group">
+                                        <label><input type="checkbox" checked id="includeUppercase"> Uppercase (A-Z)</label>
+                                        <label><input type="checkbox" checked id="includeLowercase"> Lowercase (a-z)</label>
+                                        <label><input type="checkbox" checked id="includeNumbers"> Numbers (0-9)</label>
+                                        <label><input type="checkbox" checked id="includeSymbols"> Symbols (!@#$%^&*)</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Generated Password</label>
+                                    <input type="text" class="form-control" readonly id="generatedPassword">
+                                </div>
+                                <button class="btn btn--primary" onclick="tools.generatePassword()">Generate Password</button>
+                            </div>
+                        </div>
+
+                        <div class="tool-card">
+                            <h3>Hash Identifier</h3>
+                            <div class="tool-interface">
+                                <div class="form-group">
+                                    <label class="form-label">Hash</label>
+                                    <input type="text" class="form-control" placeholder="Enter hash to identify" id="hashToIdentify">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Identification Results</label>
+                                    <textarea class="form-control" rows="8" readonly id="hashIdResults"></textarea>
+                                </div>
+                                <button class="btn btn--primary" onclick="tools.identifyHash()">Identify Hash</button>
+                            </div>
+                        </div>
+
+                        <div class="tool-card">
+                            <h3>Regex Tester</h3>
+                            <div class="tool-interface">
+                                <div class="form-group">
+                                    <label class="form-label">Regular Expression</label>
+                                    <input type="text" class="form-control" placeholder="Enter regex pattern" id="regexPattern">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Test String</label>
+                                    <textarea class="form-control" rows="3" placeholder="Enter test string" id="regexTest"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Flags</label>
+                                    <div class="checkbox-group">
+                                        <label><input type="checkbox" id="regexGlobal"> Global (g)</label>
+                                        <label><input type="checkbox" id="regexIgnoreCase"> Ignore Case (i)</label>
+                                        <label><input type="checkbox" id="regexMultiline"> Multiline (m)</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Results</label>
+                                    <textarea class="form-control" rows="6" readonly id="regexResults"></textarea>
+                                </div>
+                                <button class="btn btn--primary" onclick="tools.testRegex()">Test Regex</button>
+                            </div>
+                        </div>
+
+                        <div class="tool-card">
+                            <h3>JSON Formatter</h3>
+                            <div class="tool-interface">
+                                <div class="form-group">
+                                    <label class="form-label">JSON Input</label>
+                                    <textarea class="form-control" rows="6" placeholder="Enter JSON data" id="jsonInput"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Formatted JSON</label>
+                                    <textarea class="form-control" rows="8" readonly id="jsonOutput"></textarea>
+                                </div>
+                                <button class="btn btn--primary" onclick="tools.formatJSON()">Format JSON</button>
+                                <button class="btn btn--secondary" onclick="tools.minifyJSON()">Minify JSON</button>
+                                <button class="btn btn--secondary" onclick="tools.validateJSON()">Validate JSON</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
